@@ -6,16 +6,16 @@ python: 3.6.6
 
 install:
     - pip install github-backup
-    
+
 script:
-    - github-backup Richienb --output-directory $TRAVIS_BUILD_DIR/repositories --repositories
+    - github-backup.py Richienb --token "29ecaa74d72facf2b16ed722b13332fe570cced0" --repositories --name-regex ^((?!backups).)*$
     - find repositories -type d -execdir tar -zcvf {}.tar.gz {} && rmdir -rf {} \;
 
-    - github-backup Richienb --output-directory $TRAVIS_BUILD_DIR/gists --gists
+    - github-backup.py Richienb --token "29ecaa74d72facf2b16ed722b13332fe570cced0" --gists
     - find gists -type d -execdir tar -zcvf {}.tar.gz {} && rmdir -rf {} \;
-    
+
 after_script:
     - ./commitpush.sh
-    
+
 notifications:
     email: false
